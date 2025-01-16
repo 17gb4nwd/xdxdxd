@@ -1,5 +1,5 @@
 module.exports = {
-    token: '',
+    token: '..',
     sysID: ['1076263367506923612'],
     prefix: '?',
 
