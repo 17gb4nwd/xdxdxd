@@ -16,7 +16,7 @@ module.exports = class BoostersCommand {
         if (boosters.size === 0) {
             const noBoosters = new EmbedBuilder()
                 .setColor(0x2f3136)
-                .setDescription("❌ Aucun membre boost le serveur");
+                .setDescription("\`❌\` Aucun membre boost le serveur");
             return message.reply({ embeds: [noBoosters] });
         }
 
