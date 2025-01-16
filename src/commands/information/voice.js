@@ -11,7 +11,7 @@ module.exports = class BannerCommand {
         this.aliases = ["stats"];
     }
 
-    async execute(message, args, cache) {
+    async execute(message) {
         if (!message.guild) return;
 
         const { guild } = message;

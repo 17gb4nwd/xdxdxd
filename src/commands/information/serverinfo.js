@@ -12,7 +12,7 @@ module.exports = class BannerCommand {
         this.aliases = ["si"];
     }
 
-    async execute(message, args, cache) {
+    async execute(message) {
         const { guild } = message;
 
         let owner;
