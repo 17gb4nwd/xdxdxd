@@ -116,7 +116,6 @@ module.exports = class BannerCommand {
                             .setDescription('Réagissez avec l\'emoji pour participer !\nNombre de gagnants : 1')
                             .addFields({ name: "Fin du giveaway", value: `<t:${Math.floor((Date.now() + settings.dure) / 1000)}:R>` });
 
-                        // Gestion de l'emoji (custom ou standard)
                         const emoji = parseEmoji(settings.emoji);
                         if (!emoji) {
                             return interaction.editReply({ content: "Emoji invalide. Veuillez définir un emoji valide." });
@@ -125,10 +124,8 @@ module.exports = class BannerCommand {
                         const giveawayMessage = await channel.send({ embeds: [giveawayEmbed] });
                         try {
                             if (emoji.id) {
-                                // Emoji personnalisé
                                 await giveawayMessage.react(emoji.id);
                             } else {
-                                // Emoji standard Unicode
                                 await giveawayMessage.react(emoji.name);
                             }
                         } catch (err) {
@@ -153,7 +150,7 @@ module.exports = class BannerCommand {
                             roleinterdit: settings.roleinterdit,
                             rolerequis: settings.rolerequis,
                             vocal: settings.vocal,
-                            winnerId: settings.winnerId // Stocker l'ID du gagnant prédéfini
+                            winnerId: settings.winnerId
                         };
 
                         await db.push(`giveaways_${guildId}`, giveawayData);
@@ -171,7 +168,6 @@ module.exports = class BannerCommand {
                             ]
                         });
 
-                        // Set up reaction collector
                         const reactionCollector = giveawayMessage.createReactionCollector({
                             time: settings.dure,
                             dispose: true 
@@ -195,10 +191,9 @@ module.exports = class BannerCommand {
 
                                 let winners = [];
                                 if (settings.winnerId) {
-                                    winners.push(settings.winnerId); // Ajouter le gagnant prédéfini
+                                    winners.push(settings.winnerId); 
                                 }
 
-                                // Ajouter des gagnants supplémentaires s'il y a de la place et s'il reste des participants
                                 const remainingWinnersCount = settings.wins - winners.length;
                                 if (remainingWinnersCount > 0 && giveaway.participants.length > 0) {
                                     const additionalWinners = pickWinners(giveaway.participants.filter(p => p !== settings.winnerId), remainingWinnersCount);
@@ -370,10 +365,8 @@ module.exports = class BannerCommand {
 
         function compareEmojis(reactionEmoji, settingsEmoji) {
             if (reactionEmoji.id) {
-                // Emoji personnalisé
                 return `<:${reactionEmoji.identifier}>` === settingsEmoji || `<a:${reactionEmoji.identifier}>` === settingsEmoji;
             } else {
-                // Emoji standard
                 return reactionEmoji.name === settingsEmoji;
             }
         }
